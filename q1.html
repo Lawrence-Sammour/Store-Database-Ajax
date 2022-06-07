@@ -1,0 +1,114 @@
+<html><head>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
+ <script>
+ $(document).ready(function () {
+ $("#q1btn").click(function () {
+ let customerCity = $('#customer_city').val();
+ let customerCountry = $('#customer_country').val();
+//  console.log(customerCity + " "+ customerCountry )
+ $.ajax({
+ url: "q1.php", cache: false, timeout: 2000,
+ type: "POST",
+ data: { customer_city: customerCity , customer_country: customerCountry},
+ success: function (result) {
+ const myObj = JSON.parse(result);
+ let text = "<table border='1' style='width:100%;'><tr><th>customerNumber</th><th>customerName</th><th>city</th><th>country</th><th>salesRepEmployeeNumber</th><th>creditLimit</th></tr>"
+ for (let x in myObj) {
+ text += "<tr>"
+ + "<td  > " + myObj[x].customerNumber + "</td>"
+ + "<td>" + myObj[x].customerName+ "</td>"
+ + "<td>" + myObj[x].city + "</td>"
+ + "<td>" + myObj[x].country + "</td>"
+ + "<td>" + myObj[x].salesRepEmployeeNumber + "</td>"
+ + "<td>" + myObj[x].creditLimit + "</td>"
+ + "</tr>";
+ }
+ text += "</table>"
+ document.getElementById("Test").innerHTML = text;
+ },
+ error: function (xhr, ajaxOptions, thrownError) {
+ alert("Error:\n"+thrownError)
+ }
+ });
+ });
+ });
+ </script>
+   <style>
+    * {
+      box-sizing: border-box;
+    }
+    
+    /* Create two unequal columns that floats next to each other */
+    .column {
+      float: left;
+      padding: 10px;
+      height: 100%; /* Should be removed. Only for demonstration */
+    }
+    
+    .left {
+      width: 25%;
+      
+    }
+    
+    .right {
+      width: 75%;
+     
+    
+    }
+    
+    /* Clear floats after the columns */
+    .row:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+    
+    </style>
+         
+</head><body>
+
+    <a href="queries.php"><img style= "height: 30px; padding : 2px 2px 2px 2px; width: 30px;" src="https://cdn2.iconfinder.com/data/icons/simple-circular-icons-line/84/Left_Arrow_-512.png" alt="go back button"></a>
+	<div class="row">
+	<div class="column left" style = " padding: 30px 75px 0px 90px;">
+
+	<div class="container" >
+	
+	 
+		<div class="form-group" >
+		</br>
+        <label for="worker_name">Customer city:</label>
+		  <input style="width: 170px;" class="form-control" id="customer_city" placeholder="Enter city" name="customer_city" >
+		</div>
+		
+		 <div class="form-group">
+		    <label for="worker_name">Customer Country:</label>
+		  <input   style="width: 170px;" class="form-control" id="customer_country" placeholder="Enter country" name="customer_country" >
+		</div>
+	
+		<button style="width: 170px;background-color: #002db3;color: white;" class="btn btn-default" id="q1btn">Run</button>
+		</br>
+		</br>
+		
+		
+	</div>
+	
+	</div>
+    <div class="column right" >
+        <div class="m-4">
+            
+            <table id="Test" class="table" style =" margin: 35px 65px; width: 90%;">';
+
+ 
+</div>
+</div>
+</body>
+</html>
